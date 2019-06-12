@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">App</string>
+    <string name="buttonTitle">Hello, world</string>
+    <string name="default_recipe_name">Recipe Name</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="add_description">Add</string>
+    <string name="newIngredient">New Ingredient</string>
+    <string name="newInstruction">New Step</string>
 </resources>
