@@ -7,4 +7,10 @@
     <string name="add_description">Add</string>
     <string name="newIngredient">New Ingredient</string>
     <string name="newInstruction">New Step</string>
+    <string name="searchHint">Search</string>
+    <string name="recipe_name_hint">Recipe name</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_recipe">DELETE</string>
+    <string name="ingredientsToggleText">Include ingredients in search</string>
 </resources>
