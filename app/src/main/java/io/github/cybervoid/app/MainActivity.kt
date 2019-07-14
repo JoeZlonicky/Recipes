@@ -2,6 +2,7 @@ package io.github.cybervoid.app
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -23,6 +24,7 @@ import android.widget.Switch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ThemeHandler.theme)
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -45,8 +47,8 @@ class MainActivity : AppCompatActivity() {
             layout.topMargin = toPixels(10)
             button.layoutParams = layout
             button.isAllCaps = false
-            button.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorText))
-            button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorBoxes))
+            button.setTextColor(ContextCompat.getColor(applicationContext, ThemeHandler.getTextColor()))
+            button.setBackgroundColor(ContextCompat.getColor(applicationContext, ThemeHandler.getPrimaryColor()))
             button.setOnClickListener {
                 goToRecipe(recipe)
             }
