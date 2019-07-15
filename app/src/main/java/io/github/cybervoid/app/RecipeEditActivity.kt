@@ -1,14 +1,13 @@
 package io.github.cybervoid.app
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
@@ -138,7 +137,8 @@ class RecipeEditActivity : AppCompatActivity() {
         delete.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.FILL_PARENT)
         delete.setImageDrawable(resources.getDrawable(R.drawable.round_cancel_icon))
-        delete.setBackgroundColor(resources.getColor(R.color.colorBoxes))
+        delete.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+        delete.setColorFilter(ContextCompat.getColor(applicationContext, R.color.colorAccent))
         container.addView(delete)
         delete.setOnClickListener {
             container.visibility = View.GONE

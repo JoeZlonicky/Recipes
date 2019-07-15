@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:textSize="30sp"
-                android:background="@color/colorBoxes"
+                android:background="@color/colorPrimaryDark"
                 android:textColor="@color/colorText"
                 android:textAlignment="center"
                 android:inputType="text"
@@ -32,22 +31,24 @@
                 android:hint="@string/recipe_name_hint"
                 android:layout_weight="1"/>
             <ImageButton
-                android:layout_width="36dp"
+                android:layout_width="45dp"
                 android:layout_height="fill_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorBoxes"
+                android:background="@color/colorPrimaryDark"
                 android:src = "@drawable/check_icon"
+                android:tint="@color/colorAccent"
                 android:layout_gravity="end"
                 android:contentDescription="@string/confirm"
                 android:id="@+id/confirmChanges"/>
             <ImageButton
-                android:layout_width="36dp"
+                android:layout_width="45dp"
                 android:layout_height="fill_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorBoxes"
+                android:background="@color/colorPrimaryDark"
                 android:src = "@drawable/cancel_icon"
+                android:tint="@color/colorAccent"
                 android:layout_gravity="end"
                 android:contentDescription="@string/cancel"
                 android:id="@+id/cancelChanges"/>
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
-            android:background="@color/colorBoxes"
+            android:background="@color/colorPrimaryDark"
             android:minHeight="50dp"
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
@@ -78,9 +79,10 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/add_square_icon"
-                android:background="@color/colorBoxes"
+                android:background="@color/colorPrimaryDark"
+                android:tint="@color/colorAccent"
                 android:id="@+id/newIngredient"
-                android:contentDescription="@string/newIngredient" />
+                android:contentDescription="@string/new_ingredient" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +93,7 @@
             android:paddingStart="5dp"
             android:paddingRight="5dp"
             android:paddingEnd="5dp"
-            android:background="@color/colorBoxes"
+            android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
             android:minHeight="50dp">
             <TextView
@@ -109,19 +111,21 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/add_square_icon"
-                android:background="@color/colorBoxes"
+                android:background="@color/colorPrimaryDark"
+                android:tint="@color/colorAccent"
                 android:id="@+id/newInstruction"
-                android:contentDescription="@string/newInstruction"/>
+                android:contentDescription="@string/new_instruction"/>
         </LinearLayout>
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="140dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:background="@color/colorBoxes"
+            android:layout_marginTop="70dp"
+            android:background="@color/colorAccent"
             android:text="@string/delete_recipe"
             android:textSize="24sp"
             android:textColor="@color/colorText"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/deleteRecipeButton"/>
     </LinearLayout>
 </ScrollView>

@@ -1,16 +1,14 @@
 <resources>
-    <string name="app_name">App</string>
-    <string name="buttonTitle">Hello, world</string>
-    <string name="default_recipe_name">Recipe Name</string>
+    <string name="app_name">Recipe Book</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="instructions_title">Instructions</string>
-    <string name="add_description">Add</string>
-    <string name="newIngredient">New Ingredient</string>
-    <string name="newInstruction">New Step</string>
-    <string name="searchHint">Search</string>
+    <string name="new_ingredient">New Ingredient</string>
+    <string name="new_instruction">New Instruction</string>
+    <string name="search_hint">Search</string>
     <string name="recipe_name_hint">Recipe name</string>
+    <string name="edit_description">Edit recipe</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="delete_recipe">DELETE</string>
-    <string name="ingredientsToggleText">Include ingredients in search</string>
+    <string name="search_toggle">Include ingredients in search</string>
 </resources>

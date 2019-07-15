@@ -18,6 +18,9 @@ class LoadActivity : AppCompatActivity() {
         setContentView(R.layout.activity_load)
 
         loadRecipes()
+        for (i in 0..1000) {
+            RecipeDatabase.addRecipe(Recipe(i.toString(), RecipeDatabase.getNewID()))
+        }
         loadComplete()
     }
 
