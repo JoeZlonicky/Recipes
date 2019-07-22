@@ -12,4 +12,20 @@ class Recipe(var name: String, val id: Int) : Serializable {
         newRecipe.instructions = instructions.toMutableList()
         return newRecipe
     }
+
+    fun update(recipe: Recipe) {
+        name = recipe.name
+        ingredients = recipe.ingredients
+        instructions = recipe.instructions
+    }
+
+    fun searchMatches(search: String, includeIngredients: Boolean): Boolean {
+        if (name.contains(search, true)) {
+            return true
+        }
+        if (includeIngredients) {
+            return ingredients.any { it.contains(search, true) }
+        }
+        return false
+    }
 }

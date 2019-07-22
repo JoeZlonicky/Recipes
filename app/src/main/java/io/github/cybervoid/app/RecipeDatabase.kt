@@ -1,68 +1,67 @@
 package io.github.cybervoid.app
 
-import android.util.Log
 import java.io.*
 
 object RecipeDatabase : Serializable {
     var recipes = mutableListOf<Recipe>()
     lateinit var internalDir: File
 
+    // Saves recipes to internal storage
     fun save() {
-        val fileStream = FileOutputStream(File(internalDir, "database.ser"))
-        val byteStream = ByteArrayOutputStream()
-        val objStream = ObjectOutputStream(byteStream)
-        objStream.writeObject(recipes)
-        objStream.flush()
-        fileStream.write(byteStream.toByteArray())
-        objStream.close()
-        byteStream.close()
-        fileStream.close()
-    }
-
-    fun load() {
-        try {
-            val file = File(internalDir, "database.ser")
-            val bytes = file.readBytes()
-            val byteStream = ByteArrayInputStream(bytes)
-            val objStream = ObjectInputStream(byteStream)
-            @Suppress("UNCHECKED_CAST")
-            val database = objStream.readObject() as MutableList<Recipe>
-            objStream.close()
-            byteStream.close()
-            recipes = database
-        } catch (e: FileNotFoundException) {
-            Log.d("Files", "Failed to find existing recipe database")
+        FileOutputStream(File(internalDir, "database.ser")).use { fileStream ->
+            ByteArrayOutputStream().use { byteStream ->
+                ObjectOutputStream(byteStream).use {objStream ->
+                    objStream.writeObject(recipes)
+                    objStream.flush()
+                    fileStream.write(byteStream.toByteArray())
+                }
+            }
         }
     }
 
-    fun getNewID(): Int {
+    // Retrieves any saved recipes from internal storage
+    fun load() {
+        val file = File(internalDir, "database.ser")
+        if (!file.exists()) {
+            return
+        }
+        val bytes = file.readBytes()
+        ByteArrayInputStream(bytes).use { byteStream ->
+            ObjectInputStream(byteStream).use { objStream ->
+                @Suppress("UNCHECKED_CAST")
+                recipes = objStream.readObject() as MutableList<Recipe>
+            }
+        }
+    }
+
+    // Finds the next available id for a new recipe
+    fun createNewID(): Int {
         var newID = 0
         while (recipes.any { it.id == newID }) {
             ++newID
         }
-        Log.d("Test", "NewID: $newID")
         return newID
     }
 
+    // Adds a recipe to the recipe list
     fun addRecipe(recipe: Recipe) {
         recipes.add(recipe)
         sort()
-
     }
 
+    // Updates an existing recipe
     fun updateRecipe(recipeToUpdate: Recipe) {
-        for (recipe in recipes) {
-            if (recipe.id == recipeToUpdate.id) {
-                recipes[recipes.indexOf(recipe)] = recipeToUpdate
-            }
-        }
+        recipes.find {recipe -> recipe.id == recipeToUpdate.id}?.
+                update(recipeToUpdate)
         sort()
     }
 
+    // Removes a recipe from the recipe list
     fun deleteRecipe(recipe: Recipe) {
         recipes.removeAll {it.id == recipe.id}
     }
 
+    // Sorts recipes by name
     private fun sort() {
         recipes.sortBy { it.name }
     }

@@ -1,14 +1,15 @@
 <resources>
-    <string name="app_name">Recipe Book</string>
+    <string name="app_name">Recipes</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="instructions_title">Instructions</string>
-    <string name="new_ingredient">New Ingredient</string>
-    <string name="new_instruction">New Instruction</string>
+    <string name="new_ingredient_description">New Ingredient</string>
+    <string name="new_instruction_description">New Instruction</string>
     <string name="search_hint">Search</string>
     <string name="recipe_name_hint">Recipe name</string>
     <string name="edit_description">Edit recipe</string>
-    <string name="confirm">Confirm</string>
-    <string name="cancel">Cancel</string>
-    <string name="delete_recipe">DELETE</string>
-    <string name="search_toggle">Include ingredients in search</string>
+    <string name="confirm_description">Confirm</string>
+    <string name="cancel_description">Cancel</string>
+    <string name="delete_recipe_label">DELETE</string>
+    <string name="search_toggle_info">Include ingredients in search</string>
+    <string name="delete_description">Remove</string>
 </resources>

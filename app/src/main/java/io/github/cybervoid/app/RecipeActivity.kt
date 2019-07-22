@@ -1,17 +1,10 @@
 package io.github.cybervoid.app
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
-import android.view.MotionEvent
-import android.view.Window
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,26 +15,37 @@ class RecipeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        supportActionBar?.hide()
         setContentView(R.layout.activity_recipe)
 
         recipe = intent.getSerializableExtra("Recipe") as Recipe
-        val nameView: TextView = findViewById(R.id.recipeName)
-        val ingredientsContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
-        val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
 
-        nameView.text = recipe.name
+        // Set title
+        findViewById<TextView>(R.id.recipeName).text = recipe.name
+
+        // Add ingredients to layout
+        val ingredientsContainer = findViewById<LinearLayout>(R.
+                id.ingredientContainer)
         for (ingredient in recipe.ingredients) {
-            ingredientsContainer.addView(createListItem(ingredient, false))
-        }
-        for (instruction in recipe.instructions) {
-            instructionContainer.addView(createListItem(instruction, true))
+            val view = layoutInflater.inflate(R.layout.ingredient_text_view,
+                    ingredientsContainer, false) as TextView
+            view.text = ingredient
+            ingredientsContainer.addView(view)
         }
 
+        // Add instructions to layout
+        val instructionContainer = findViewById<LinearLayout>(R.
+                id.instructionContainer)
+        for (instruction in recipe.instructions) {
+            val view = layoutInflater.inflate(R.layout.instruction_text_view,
+                    instructionContainer, false) as TextView
+            view.text = instruction
+            instructionContainer.addView(view)
+        }
+
+        // Go to RecipeEditActivity on pressing edit button
         findViewById<ImageButton>(R.id.edit).setOnClickListener {
-            val intent = Intent(this, RecipeEditActivity::class.java).apply {
+            val intent = Intent(this,
+                    RecipeEditActivity::class.java).apply {
                 putExtra("Recipe", recipe)
                 putExtra("IsNewRecipe", false)
             }
@@ -50,39 +54,10 @@ class RecipeActivity : AppCompatActivity() {
         }
     }
 
-    private fun createListItem(text: String, extraSpacing: Boolean): TextView {
-        val textView = TextView(this)
-        textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorText))
-        textView.text = text
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
-        if (extraSpacing) {
-            val layout = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
-            layout.bottomMargin = 20
-            textView.layoutParams = layout
-        }
-        return textView
-    }
-
+    // Go back to MainActivity on pressing back
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
-    }
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (ev?.action == MotionEvent.ACTION_DOWN) {
-            val view = currentFocus
-            if (view is EditText) {
-                val rect = Rect()
-                view.getGlobalVisibleRect(rect)
-                if (!rect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                    view.clearFocus()
-                    val inputManger = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputManger.hideSoftInputFromWindow(view.windowToken, 0)
-
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev)
     }
 }

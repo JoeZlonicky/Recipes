@@ -19,6 +19,9 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 
+//TODO: Cleanup code
+//TODO: Move views to xml's
+
 class RecipeEditActivity : AppCompatActivity() {
 
     private lateinit var recipe: Recipe
@@ -27,62 +30,54 @@ class RecipeEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        supportActionBar?.hide()
         setContentView(R.layout.activity_recipe_edit)
 
+        // Get extras and save a copy of the recipe
         recipe = intent.getSerializableExtra("Recipe") as Recipe
-        oldRecipe = recipe.copy()
         isNewRecipe = intent.getBooleanExtra("IsNewRecipe", false)
+        oldRecipe = recipe.copy()  // Save a copy for reverting changes
 
         val title = findViewById<EditText>(R.id.recipeName)
         val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
         val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
 
         title.setText(recipe.name)
-        for (i in 0 until recipe.ingredients.size) {
-            ingredientContainer.addView(createTextEdit(recipe.ingredients[i]))
+
+        // Make ingredients editable
+        for (ingredient in recipe.ingredients) {
+            val view = layoutInflater.inflate(R.layout.editable_list_item,
+                    ingredientContainer, false) as LinearLayout
+            (view.getChildAt(0) as EditText).setText(ingredient)
+            ingredientContainer.addView(view)
         }
-        for (i in 0 until recipe.instructions.size) {
-            instructionContainer.addView(createTextEdit(recipe.instructions[i]))
+
+        // Make instructions editable
+        for (instruction in recipe.instructions) {
+            val view = layoutInflater.inflate(R.layout.editable_list_item,
+                    instructionContainer, false) as LinearLayout
+            (view.getChildAt(0) as EditText).setText(instruction)
+            instructionContainer.addView(view)
         }
+
+        // Add new ingredient/instruction listeners
         findViewById<ImageButton>(R.id.newIngredient).setOnClickListener {
-            ingredientContainer.addView(createTextEdit())
+            layoutInflater.inflate(R.layout.editable_list_item,
+                    ingredientContainer, true) as LinearLayout
         }
         findViewById<ImageButton>(R.id.newInstruction).setOnClickListener {
-            instructionContainer.addView(createTextEdit())
+            layoutInflater.inflate(R.layout.editable_list_item,
+                    instructionContainer, true) as LinearLayout
         }
+        // Add listener for saving changes
         findViewById<ImageButton>(R.id.confirmChanges).setOnClickListener {
-            recipe.name = title.text.toString()
-            recipe.ingredients.clear()
-            for (i in 0 until ingredientContainer.childCount) {
-                val innerContainer = ingredientContainer.getChildAt(i) as LinearLayout
-                val ingredient = innerContainer.getChildAt(0) as EditText
-                if (ingredient.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
-                    recipe.ingredients.add(ingredient.text.toString())
-                }
-            }
-            recipe.instructions.clear()
-            for (i in 0 until instructionContainer.childCount) {
-                val innerContainer = instructionContainer.getChildAt(i) as LinearLayout
-                val instruction = innerContainer.getChildAt(0) as EditText
-                if (instruction.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
-                    recipe.instructions.add(instruction.text.toString())
-                }
-            }
-            if (isNewRecipe) {
-                RecipeDatabase.addRecipe(recipe)
-            } else {
-                RecipeDatabase.updateRecipe(recipe)
-            }
-            RecipeDatabase.save()
+            saveChanges()
             val intent = Intent(this, RecipeActivity::class.java).apply {
                 putExtra("Recipe", recipe)
             }
             startActivity(intent)
             finish()
         }
+        // Add listener for discarding changes
         findViewById<ImageButton>(R.id.cancelChanges).setOnClickListener {
             if (isNewRecipe) {
                 val intent = Intent(this, MainActivity::class.java)
@@ -93,6 +88,7 @@ class RecipeEditActivity : AppCompatActivity() {
             }
         }
 
+        // Add functionality to delete button
         if (!isNewRecipe) {
             findViewById<Button>(R.id.deleteRecipeButton).setOnClickListener {
                 val dialog = AlertDialog.Builder(this, R.style.AlertDialogStyle).create()
@@ -115,51 +111,53 @@ class RecipeEditActivity : AppCompatActivity() {
                 negButton.layoutParams = layout
             }
         } else {
+            // Hide delete button on new recipes
             findViewById<Button>(R.id.deleteRecipeButton).visibility = View.GONE
         }
     }
 
-    private fun createTextEdit(text:String = ""): View {
-        val container = LinearLayout(this)
-        container.orientation = LinearLayout.HORIZONTAL
-        container.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT)
-
-        val newEdit = TextInputEditText(this)
-        newEdit.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
-        newEdit.setText(text)
-        newEdit.setTextColor(resources.getColor(R.color.colorText))
-        newEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
-        container.addView(newEdit)
-
-        val delete = ImageButton(this)
-        delete.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.FILL_PARENT)
-        delete.setImageDrawable(resources.getDrawable(R.drawable.round_cancel_icon))
-        delete.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-        delete.setColorFilter(ContextCompat.getColor(applicationContext, R.color.colorAccent))
-        container.addView(delete)
-        delete.setOnClickListener {
-            container.visibility = View.GONE
+    fun saveChanges() {
+        recipe.name = findViewById<EditText>(R.id.recipeName).text.toString()
+        val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
+        val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
+        recipe.ingredients.clear()
+        for (i in 0 until ingredientContainer.childCount) {
+            val innerContainer = ingredientContainer.getChildAt(i) as LinearLayout
+            val ingredient = innerContainer.getChildAt(0) as EditText
+            if (ingredient.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
+                recipe.ingredients.add(ingredient.text.toString())
+            }
         }
-        return container
+        recipe.instructions.clear()
+        for (i in 0 until instructionContainer.childCount) {
+            val innerContainer = instructionContainer.getChildAt(i) as LinearLayout
+            val instruction = innerContainer.getChildAt(0) as EditText
+            if (instruction.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
+                recipe.instructions.add(instruction.text.toString())
+            }
+        }
+        if (isNewRecipe) {
+            RecipeDatabase.addRecipe(recipe)
+        } else {
+            RecipeDatabase.updateRecipe(recipe)
+        }
+        RecipeDatabase.save()
     }
 
+    // Go to correct activity on pressing back
     override fun onBackPressed() {
-        if (isNewRecipe) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        intent = if (isNewRecipe) {
+            Intent(this, MainActivity::class.java)
         } else {
-            val intent = Intent(this, RecipeActivity::class.java).apply {
+            Intent(this, RecipeActivity::class.java).apply {
                 putExtra("Recipe", oldRecipe)
             }
-            startActivity(intent)
-            finish()
         }
+        startActivity(intent)
+        finish()
     }
 
+    // Release focus on touch outside the view
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             val view = currentFocus
@@ -168,9 +166,10 @@ class RecipeEditActivity : AppCompatActivity() {
                 view.getGlobalVisibleRect(rect)
                 if (!rect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                     view.clearFocus()
-                    val inputManger = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val inputManger = getSystemService(Context.
+                            INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManger.hideSoftInputFromWindow(view.windowToken, 0)
-
+                    return true
                 }
             }
         }
