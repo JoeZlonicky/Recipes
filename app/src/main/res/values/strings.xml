@@ -2,8 +2,11 @@
     <string name="app_name">Recipes</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="instructions_title">Instructions</string>
+    <string name="notes_title">Notes</string>
     <string name="new_ingredient_description">New Ingredient</string>
     <string name="new_instruction_description">New Instruction</string>
+    <string name="new_note_description">New Note</string>
+    <string name="note">New Note</string>
     <string name="search_hint">Search</string>
     <string name="recipe_name_hint">Recipe name</string>
     <string name="edit_description">Edit recipe</string>
@@ -12,4 +15,5 @@
     <string name="delete_recipe_label">DELETE</string>
     <string name="search_toggle_info">Include ingredients in search</string>
     <string name="delete_description">Remove</string>
+
 </resources>

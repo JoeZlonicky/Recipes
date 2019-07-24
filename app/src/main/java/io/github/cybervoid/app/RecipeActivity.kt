@@ -2,9 +2,7 @@ package io.github.cybervoid.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.TypedValue
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,8 +16,6 @@ class RecipeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_recipe)
 
         recipe = intent.getSerializableExtra("Recipe") as Recipe
-
-        // Set title
         findViewById<TextView>(R.id.recipeName).text = recipe.name
 
         // Add ingredients to layout
@@ -35,11 +31,21 @@ class RecipeActivity : AppCompatActivity() {
         // Add instructions to layout
         val instructionContainer = findViewById<LinearLayout>(R.
                 id.instructionContainer)
-        for (instruction in recipe.instructions) {
+        for ((i, instruction) in recipe.instructions.withIndex()) {
             val view = layoutInflater.inflate(R.layout.instruction_text_view,
                     instructionContainer, false) as TextView
-            view.text = instruction
+            val text = (i + 1).toString() + ". " + instruction
+            view.text = text
             instructionContainer.addView(view)
+        }
+
+        // Add notes to layout
+        val noteContainer = findViewById<LinearLayout>(R.id.noteContainer)
+        for (note in recipe.notes) {
+            val view = layoutInflater.inflate(R.layout.note_text_view,
+                    noteContainer, false) as TextView
+            view.text = note
+            noteContainer.addView(view)
         }
 
         // Go to RecipeEditActivity on pressing edit button

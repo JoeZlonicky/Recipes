@@ -6,16 +6,15 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SwitchCompat
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Switch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                                        before: Int, count: Int) {
             }
         })
-        findViewById<Switch>(R.id.ingredientsSearchToggle).setOnClickListener {
+        findViewById<SwitchCompat>(R.id.ingredientsSearchToggle).setOnClickListener {
             updateVisibleRecipes()
         }
     }
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateVisibleRecipes() {
         val searchString = findViewById<EditText>(R.id.searchBar).text.toString()
         val recipeContainer = findViewById<LinearLayout>(R.id.recipeContainer)
-        val includeIngredients = findViewById<Switch>(R.id.
+        val includeIngredients = findViewById<SwitchCompat>(R.id.
                 ingredientsSearchToggle).isChecked
         for (i in 0..(recipeContainer.childCount - 1)) {
             val include = RecipeDatabase.recipes[i].searchMatches(searchString,
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Go to RecipeActivity
+    // Go to RecipeActivity with an existing recipe
     private fun goToRecipe(recipe: Recipe) {
         val intent = Intent(this, RecipeActivity::class.java).apply {
             putExtra("Recipe", recipe)

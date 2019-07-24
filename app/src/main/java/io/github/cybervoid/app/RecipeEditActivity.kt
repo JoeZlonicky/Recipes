@@ -3,24 +3,19 @@ package io.github.cybervoid.app
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.media.Image
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.activity_recipe.*
 
-//TODO: Cleanup code
-//TODO: Move views to xml's
 
 class RecipeEditActivity : AppCompatActivity() {
 
@@ -37,45 +32,44 @@ class RecipeEditActivity : AppCompatActivity() {
         isNewRecipe = intent.getBooleanExtra("IsNewRecipe", false)
         oldRecipe = recipe.copy()  // Save a copy for reverting changes
 
-        val title = findViewById<EditText>(R.id.recipeName)
-        val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
-        val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
-
-        title.setText(recipe.name)
+        findViewById<EditText>(R.id.recipeName).setText(recipe.name)
 
         // Make ingredients editable
         for (ingredient in recipe.ingredients) {
-            val view = layoutInflater.inflate(R.layout.editable_list_item,
-                    ingredientContainer, false) as LinearLayout
-            (view.getChildAt(0) as EditText).setText(ingredient)
-            ingredientContainer.addView(view)
+            addIngredientToLayout(ingredient)
         }
 
         // Make instructions editable
         for (instruction in recipe.instructions) {
-            val view = layoutInflater.inflate(R.layout.editable_list_item,
-                    instructionContainer, false) as LinearLayout
-            (view.getChildAt(0) as EditText).setText(instruction)
-            instructionContainer.addView(view)
+            addInstructionToLayout(instruction)
+        }
+
+        // Make notes editable
+        for (note in recipe.notes) {
+            addNoteToLayout(note)
         }
 
         // Add new ingredient/instruction listeners
         findViewById<ImageButton>(R.id.newIngredient).setOnClickListener {
-            layoutInflater.inflate(R.layout.editable_list_item,
-                    ingredientContainer, true) as LinearLayout
+            addIngredientToLayout("")
         }
         findViewById<ImageButton>(R.id.newInstruction).setOnClickListener {
-            layoutInflater.inflate(R.layout.editable_list_item,
-                    instructionContainer, true) as LinearLayout
+            addInstructionToLayout("")
+        }
+        findViewById<ImageButton>(R.id.newNote).setOnClickListener {
+            addNoteToLayout("")
         }
         // Add listener for saving changes
         findViewById<ImageButton>(R.id.confirmChanges).setOnClickListener {
-            saveChanges()
-            val intent = Intent(this, RecipeActivity::class.java).apply {
-                putExtra("Recipe", recipe)
+            val recipeName = findViewById<EditText>(R.id.recipeName).text.toString()
+            if (recipeName.any { it != ' ' }) {
+                saveChanges()
+                val intent = Intent(this, RecipeActivity::class.java).apply {
+                    putExtra("Recipe", recipe)
+                }
+                startActivity(intent)
+                finish()
             }
-            startActivity(intent)
-            finish()
         }
         // Add listener for discarding changes
         findViewById<ImageButton>(R.id.cancelChanges).setOnClickListener {
@@ -116,10 +110,47 @@ class RecipeEditActivity : AppCompatActivity() {
         }
     }
 
-    fun saveChanges() {
+    private fun addIngredientToLayout(text: String) {
+        val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
+        val view = layoutInflater.inflate(R.layout.editable_list_item,
+                ingredientContainer, false) as LinearLayout
+        view.findViewById<EditText>(R.id.editText).setText(text)
+        view.findViewById<EditText>(R.id.editText).hint = "New ingredient"
+        view.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+            view.visibility = View.GONE
+        }
+        ingredientContainer.addView(view)
+    }
+
+    private fun addInstructionToLayout(text: String) {
+        val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
+        val view = layoutInflater.inflate(R.layout.editable_list_item,
+                instructionContainer, false) as LinearLayout
+        view.findViewById<EditText>(R.id.editText).setText(text)
+        view.findViewById<EditText>(R.id.editText).hint = "New instruction"
+        view.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+            view.visibility = View.GONE
+        }
+        instructionContainer.addView(view)
+    }
+
+    private fun addNoteToLayout(text: String) {
+        val noteContainer = findViewById<LinearLayout>(R.id.noteContainer)
+        val view = layoutInflater.inflate(R.layout.editable_list_item,
+                ingredientContainer, false) as LinearLayout
+        view.findViewById<EditText>(R.id.editText).setText(text)
+        view.findViewById<EditText>(R.id.editText).hint = "New note"
+        view.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+            view.visibility = View.GONE
+        }
+        noteContainer.addView(view)
+    }
+
+    private fun saveChanges() {
         recipe.name = findViewById<EditText>(R.id.recipeName).text.toString()
         val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
         val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
+        val noteContainer = findViewById<LinearLayout>(R.id.noteContainer)
         recipe.ingredients.clear()
         for (i in 0 until ingredientContainer.childCount) {
             val innerContainer = ingredientContainer.getChildAt(i) as LinearLayout
@@ -134,6 +165,14 @@ class RecipeEditActivity : AppCompatActivity() {
             val instruction = innerContainer.getChildAt(0) as EditText
             if (instruction.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
                 recipe.instructions.add(instruction.text.toString())
+            }
+        }
+        recipe.notes.clear()
+        for (i in 0 until noteContainer.childCount) {
+            val innerContainer = noteContainer.getChildAt(i) as LinearLayout
+            val note = innerContainer.getChildAt(0) as EditText
+            if (note.text.toString().isNotEmpty() && innerContainer.visibility != View.GONE) {
+                recipe.notes.add(note.text.toString())
             }
         }
         if (isNewRecipe) {

@@ -21,7 +21,7 @@ class LoadActivity : AppCompatActivity() {
         }
     }
 
-    // Give RecipeDatabase the location of internal storage and load recipes
+    // Give RecipeDatabase the location of internal storage and then load recipes
     private fun loadRecipes() {
         RecipeDatabase.internalDir = filesDir
         RecipeDatabase.load()

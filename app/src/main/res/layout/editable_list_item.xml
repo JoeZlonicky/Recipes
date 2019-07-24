@@ -11,13 +11,15 @@
         android:text=""
         android:textColor="@color/colorText"
         android:textSize="20sp"
-        android:inputType="text"
-        tools:ignore="Autofill,LabelFor" />
+        android:inputType="textMultiLine"
+        tools:ignore="Autofill,LabelFor"
+        android:id="@+id/editText"/>
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/round_cancel_icon"
         android:background="@color/colorPrimaryDark"
         android:tint="@color/colorAccent"
-        android:contentDescription="@string/delete_description"/>
+        android:contentDescription="@string/delete_description"
+        android:id="@+id/imageButton"/>
 </LinearLayout>

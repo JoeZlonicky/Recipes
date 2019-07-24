@@ -5,11 +5,13 @@ import java.io.Serializable
 class Recipe(var name: String, val id: Int) : Serializable {
     var ingredients = mutableListOf<String>()
     var instructions = mutableListOf<String>()
+    var notes = mutableListOf<String>()
 
     fun copy(): Recipe {
         val newRecipe = Recipe(name, id)
         newRecipe.ingredients = ingredients.toMutableList()
         newRecipe.instructions = instructions.toMutableList()
+        newRecipe.notes = notes.toMutableList()
         return newRecipe
     }
 
@@ -17,6 +19,7 @@ class Recipe(var name: String, val id: Int) : Serializable {
         name = recipe.name
         ingredients = recipe.ingredients
         instructions = recipe.instructions
+        notes = recipe.notes
     }
 
     fun searchMatches(search: String, includeIngredients: Boolean): Boolean {

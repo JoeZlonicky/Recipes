@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,10 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
@@ -33,8 +32,13 @@
                 android:background="@color/colorPrimaryDark"
                 android:hint="@string/search_hint"
                 android:inputType="text"
-                android:padding="5dp"
-                android:textColor="@color/colorText" />
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="@color/colorText"
+                android:elevation="2dp"
+                tools:ignore="Autofill" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,28 +47,29 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
-
-                <Switch
-                    android:id="@+id/ingredientsSearchToggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/search_toggle_info"
                     android:textColor="@color/colorText"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    tools:ignore="RtlHardcoded" />
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/SwitchStyle"
+                    android:id="@+id/ingredientsSearchToggle"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/recipeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:clipToPadding="false"/>
+            </LinearLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
@@ -72,10 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
         android:src="@drawable/add_icon"
         android:tint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
