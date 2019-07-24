@@ -26,24 +26,22 @@
                 android:paddingRight="5dp"
                 android:text=""
                 android:textSize="30sp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/shadow"
                 android:textColor="@color/colorText"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:elevation="2dp"/>
+                android:layout_weight="1"/>
             <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/shadow"
                 android:src = "@drawable/edit_icon"
                 android:layout_gravity="end"
                 android:tint="@color/colorAccent"
                 android:contentDescription="@string/edit_description"
                 android:id="@+id/edit"
-                tools:ignore="RtlHardcoded"
-                android:elevation="2dp"/>
+                tools:ignore="RtlHardcoded" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +50,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:orientation="vertical"
-            android:background="@color/colorPrimaryDark"
-            android:minHeight="50dp"
-            android:elevation="2dp">
+            android:background="@drawable/shadow"
+            android:minHeight="50dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,10 +74,9 @@
             android:layout_marginTop="15dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/shadow"
             android:orientation="vertical"
-            android:minHeight="50dp"
-            android:elevation="2dp">
+            android:minHeight="50dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,9 +100,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:orientation="vertical"
-            android:background="@color/colorPrimaryDark"
-            android:minHeight="50dp"
-            android:elevation="2dp">
+            android:background="@drawable/shadow"
+            android:minHeight="50dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

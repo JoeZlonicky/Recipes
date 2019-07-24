@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/shadow"
                 android:hint="@string/search_hint"
                 android:inputType="text"
                 android:paddingTop="5dp"
@@ -37,7 +37,6 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:textColor="@color/colorText"
-                android:elevation="2dp"
                 tools:ignore="Autofill" />
 
             <LinearLayout
