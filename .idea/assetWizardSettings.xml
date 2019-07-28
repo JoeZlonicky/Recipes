@@ -181,7 +181,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%202018.2.2/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_settings_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%202019.1.3/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_drop_down_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -191,12 +191,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="height" value="28" />
-                            <entry key="outputName" value="settings_icon" />
+                            <entry key="color" value="66bb6a" />
+                            <entry key="height" value="72" />
+                            <entry key="outputName" value="down_arrow" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\Joe" />
-                            <entry key="width" value="28" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

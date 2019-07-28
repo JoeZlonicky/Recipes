@@ -39,14 +39,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Add listeners for search bar and ingredients toggle
-        findViewById<EditText>(R.id.searchBar).
-                addTextChangedListener(object: TextWatcher {
+        findViewById<EditText>(R.id.searchBar).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 updateVisibleRecipes()
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int,
                                            count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int,
                                        before: Int, count: Int) {
             }
@@ -60,8 +61,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateVisibleRecipes() {
         val searchString = findViewById<EditText>(R.id.searchBar).text.toString()
         val recipeContainer = findViewById<LinearLayout>(R.id.recipeContainer)
-        val includeIngredients = findViewById<SwitchCompat>(R.id.
-                ingredientsSearchToggle).isChecked
+        val includeIngredients = findViewById<SwitchCompat>(R.id.ingredientsSearchToggle).isChecked
         for (i in 0..(recipeContainer.childCount - 1)) {
             val include = RecipeDatabase.recipes[i].searchMatches(searchString,
                     includeIngredients)
@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             putExtra("IsNewRecipe", false)
         }
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_right, R.anim.no_animation)
         finish()
     }
 
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             putExtra("IsNewRecipe", true)
         }
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_right, R.anim.no_animation)
         finish()
     }
 
@@ -103,10 +105,8 @@ class MainActivity : AppCompatActivity() {
                 view.getGlobalVisibleRect(rect)
                 if (!rect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                     view.clearFocus()
-                    val inputManger = getSystemService(Context.
-                            INPUT_METHOD_SERVICE) as InputMethodManager
+                    val inputManger = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManger.hideSoftInputFromWindow(view.windowToken, 0)
-                    return true
                 }
             }
         }

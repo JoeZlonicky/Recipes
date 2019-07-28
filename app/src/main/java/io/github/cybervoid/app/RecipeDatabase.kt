@@ -10,7 +10,7 @@ object RecipeDatabase : Serializable {
     fun save() {
         FileOutputStream(File(internalDir, "database.ser")).use { fileStream ->
             ByteArrayOutputStream().use { byteStream ->
-                ObjectOutputStream(byteStream).use {objStream ->
+                ObjectOutputStream(byteStream).use { objStream ->
                     objStream.writeObject(recipes)
                     objStream.flush()
                     fileStream.write(byteStream.toByteArray())
@@ -51,14 +51,13 @@ object RecipeDatabase : Serializable {
 
     // Updates an existing recipe
     fun updateRecipe(recipeToUpdate: Recipe) {
-        recipes.find {recipe -> recipe.id == recipeToUpdate.id}?.
-                update(recipeToUpdate)
+        recipes.find { recipe -> recipe.id == recipeToUpdate.id }?.update(recipeToUpdate)
         sort()
     }
 
     // Removes a recipe from the recipe list
     fun deleteRecipe(recipe: Recipe) {
-        recipes.removeAll {it.id == recipe.id}
+        recipes.removeAll { it.id == recipe.id }
     }
 
     // Sorts recipes by name

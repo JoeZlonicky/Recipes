@@ -19,18 +19,17 @@ class RecipeActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.recipeName).text = recipe.name
 
         // Add ingredients to layout
-        val ingredientsContainer = findViewById<LinearLayout>(R.
-                id.ingredientContainer)
+        val ingredientsContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
         for (ingredient in recipe.ingredients) {
             val view = layoutInflater.inflate(R.layout.ingredient_text_view,
                     ingredientsContainer, false) as TextView
-            view.text = ingredient
+            val text = "• $ingredient"
+            view.text = text
             ingredientsContainer.addView(view)
         }
 
         // Add instructions to layout
-        val instructionContainer = findViewById<LinearLayout>(R.
-                id.instructionContainer)
+        val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
         for ((i, instruction) in recipe.instructions.withIndex()) {
             val view = layoutInflater.inflate(R.layout.instruction_text_view,
                     instructionContainer, false) as TextView
@@ -44,7 +43,8 @@ class RecipeActivity : AppCompatActivity() {
         for (note in recipe.notes) {
             val view = layoutInflater.inflate(R.layout.note_text_view,
                     noteContainer, false) as TextView
-            view.text = note
+            val text = "• $note"
+            view.text = text
             noteContainer.addView(view)
         }
 
@@ -56,6 +56,7 @@ class RecipeActivity : AppCompatActivity() {
                 putExtra("IsNewRecipe", false)
             }
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_right, R.anim.no_animation)
             finish()
         }
     }
@@ -64,6 +65,7 @@ class RecipeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(0, R.anim.slide_left)
         finish()
     }
 }

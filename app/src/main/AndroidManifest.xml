@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".RecipeActivity" />
-        <activity android:name=".RecipeEditActivity" />
+        <activity android:name=".RecipeEditActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

@@ -31,4 +31,13 @@ class Recipe(var name: String, val id: Int) : Serializable {
         }
         return false
     }
+
+    fun equals(other: Recipe): Boolean {
+        if (ingredients != other.ingredients) return false
+        if (instructions != other.instructions) return false
+        if (notes != other.notes) return false
+        if (name != other.name) return false
+        if (id != other.id) return false
+        return true
+    }
 }

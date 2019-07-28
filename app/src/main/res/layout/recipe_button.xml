@@ -8,4 +8,4 @@
     android:text=""
     android:textAllCaps="false"
     android:textColor="@color/colorText"
-    android:background="@drawable/shadow"/>
+    android:background="@drawable/shadow_box"/>
