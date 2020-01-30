@@ -15,4 +15,4 @@ Displays all stored recipes.
 ![Image of the search bar being used](screenshots/search.png)
 
 ## Searching by ingredient
-![Image of the search bar being used with ingredients included in search](screenshots/ingredient_search.png")
+![Image of the search bar being used with ingredients included in search](screenshots/ingredient_search.png)
