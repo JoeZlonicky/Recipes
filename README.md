@@ -6,13 +6,13 @@ Displays all stored recipes.
 ![Image of a list of recipes](screenshots/main.png)
 
 ## Viewing a recipe
-![Image of a recipe being viewed](screenshots/recipe.jpg)
+![Image of a recipe being viewed](screenshots/recipe.png)
 
 ## Editing a recipe
-![Image of a recipe being edited](screenshots/edit.jpg)
+![Image of a recipe being edited](screenshots/edit.png)
 
 ## Searching for recipes
-![Image of the search bar being used](screenshots/search.jpg)
+![Image of the search bar being used](screenshots/search.png)
 
 ## Searching by ingredient
-![Image of the search bar being used with ingredients included in search](screenshots/ingredient_search.jpg")
+![Image of the search bar being used with ingredients included in search](screenshots/ingredient_search.png")
