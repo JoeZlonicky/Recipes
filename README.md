@@ -3,7 +3,7 @@ An Android app that displays recipes, allows creation and editing of recipes, an
 
 ## Main page
 Displays all stored recipes.
-![Image of a list of recipes](screenshots/main.jpg)
+![Image of a list of recipes](screenshots/main.png)
 
 ## Viewing a recipe
 ![Image of a recipe being viewed](screenshots/recipe.jpg)
